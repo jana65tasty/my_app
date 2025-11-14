@@ -40,7 +40,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest
+          tags: ${{ DOCKERHUB_USERNAME }}/myapp:latest
 
       # 6️⃣ Деплой на сервер
       - name: Deploy to server via SSH
@@ -50,7 +50,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest
+            docker pull ${{ DOCKERHUB_USERNAME }}/myapp:latest
             docker stop myapp || true
             docker rm myapp || true
             docker run -d -p 80:5000 --name myapp ${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest
